@@ -1,9 +1,10 @@
 var Auth = require('./index');
 var auth = new Auth({
-  url: 'URL',
-  prefix: 'stage',
-  expire: 3600
-});
+      "url": "url",
+      "expire": 3600,
+      "prefix":"prod",
+      "secret":"secret"
+    });
 
 var opts = {
   payload: { thisopts: 'thisdoiwefwe', secondone: 'soihfwoeifhw2' },

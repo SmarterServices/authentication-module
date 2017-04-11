@@ -1,9 +1,16 @@
 var jwt = require('jwt-simple');
-var secret = 'Smarter1';
 /**
  * @class token
  */
-var tokens = {
+var tokens = function(secret) {
+  console.log(secret)
+  if(!secret) {
+    throw Error('Need to pass secret key in constructor')
+  }
+  this.secret = secret;
+} 
+
+
   /**
      * This function is used to encode a token
      *
@@ -12,8 +19,8 @@ var tokens = {
      * @param {Object} payload payload that will be encoded in the token
      * @return {String} token
      */
-  encode: function(payload) {
-    return jwt.encode(payload, secret);
+tokens.prototype.encode = function(payload) {
+    return jwt.encode(payload, this.secret);
   },
   /**
      * This function is used to decode a token
@@ -23,8 +30,7 @@ var tokens = {
      * @param {String} token that will be decoded
      * @return {String} decodedtoken
      */
-  decode: function(token) {
-    return jwt.decode(token, secret);
+tokens.prototype.decode = function(token) {
+    return jwt.decode(token, this.secret);
   }
-};
 module.exports = tokens;

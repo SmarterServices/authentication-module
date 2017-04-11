@@ -1,9 +1,10 @@
-var token = require('./helper/token');
+var Token = require('./helper/token');
 var redis = require('./helper/redisWrapper');
 var iam = require('open-iam');
 var async = require('async');
 var uuid = require('uuid');
 var auth = function(config) {
+  this.token = new Token(config.secret)
   this.redis = new redis({
     url: config.url,
     prefix: config.prefix,
@@ -58,7 +59,7 @@ auth.prototype.check = function(tok) {
         if (!res) {
           return reject('Token validation fail');
         }
-        return token.decode(tok);
+        return this.token.decode(tok);
       })
       .then(res => resolve({ validated: true, token: res }))
       .catch(e => reject({ err: e }));
@@ -73,7 +74,7 @@ auth.prototype.register = function(opts) {
   return new Promise((resolve, reject) => {
     opts.payload.id = uuid.v1();
     opts.payload.create_time = +new Date();
-    var returnToken = token.encode(opts.payload);
+    var returnToken = this.token.encode(opts.payload);
     var Obj = { token: returnToken, createAt: new Date() };
     var returnIam;
     if (opts.iam) {
