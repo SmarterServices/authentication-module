@@ -1,0 +1,17 @@
+{
+  "name": "auth-module",
+  "version": "1.0.0",
+  "description": "redis auth in module form",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "author": "jordan piepkow",
+  "license": "ISC",
+  "dependencies": {
+    "jwt-simple": "^0.5.1",
+    "open-iam": "0.0.12",
+    "redis": "^2.7.1",
+    "uuid": "^3.0.1"
+  }
+}
