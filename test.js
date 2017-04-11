@@ -1,6 +1,6 @@
 var Auth = require('./index');
 var auth = new Auth({
-  url: 'redis://x:RFLQETEKFFUDWXSI@aws-us-east-1-portal.16.dblayer.com:10127',
+  url: 'URL',
   prefix: 'stage',
   expire: 3600
 });
