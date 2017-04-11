@@ -10,6 +10,11 @@ var auth = function(config) {
     expire: config.expire
   });
 };
+/**
+ * logout this function will log a user out, ie delete their token
+ * @param  {String} tok users token
+ * @return {Promise} resolve or reject
+ */
 auth.prototype.logout = function(tok) {
   return new Promise((resolve, reject) => {
     this.redis
@@ -21,6 +26,11 @@ auth.prototype.logout = function(tok) {
       );
   });
 };
+/**
+ * permissions will return the iam doc for a token
+ * @param  {String} tok users token
+ * @return {Promise} resolve or reject
+ */
 auth.prototype.permissions = function(tok) {
   return new Promise((resolve, reject) => {
     this.redis
@@ -35,6 +45,11 @@ auth.prototype.permissions = function(tok) {
       .catch(e => reject({ err: 'Error getting permissions for a token' }));
   });
 };
+/**
+ * check will check that a users token in valid
+ * @param  {String} tok users token
+ * @return {Promise} resolve or reject
+ */
 auth.prototype.check = function(tok) {
   return new Promise((resolve, reject) => {
     this.redis
@@ -49,6 +64,11 @@ auth.prototype.check = function(tok) {
       .catch(e => reject({ err: e }));
   });
 };
+/**
+ * register
+ * @param  {Object} opts object used to create token
+ * @return {Promise} resolve({token:toekn,iam:iam}) or reject()
+ */
 auth.prototype.register = function(opts) {
   return new Promise((resolve, reject) => {
     opts.payload.id = uuid.v1();
