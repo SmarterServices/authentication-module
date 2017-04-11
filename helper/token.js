@@ -3,7 +3,6 @@ var jwt = require('jwt-simple');
  * @class token
  */
 var tokens = function(secret) {
-  console.log(secret)
   if(!secret) {
     throw Error('Need to pass secret key in constructor')
   }
