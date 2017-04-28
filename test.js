@@ -1,10 +1,10 @@
 var Auth = require('./index');
 var auth = new Auth({
-      "url": "url",
-      "expire": 3600,
-      "prefix":"prod",
-      "secret":"secret"
-    });
+  url: '',
+  expire: 3600,
+  prefix: '',
+  secret: ''
+});
 
 var opts = {
   payload: { thisopts: 'thisdoiwefwe', secondone: 'soihfwoeifhw2' },
@@ -23,6 +23,20 @@ var opts = {
     ]
   }
 };
+setTimeout(
+  () => {
+    auth.register(opts, 5).then(res => {
+      setTimeout(
+        () => {
+          auth.check(res.token).then(console.log).catch(console.log);
+        },
+        7000
+      );
+    });
+  },
+  3000
+);
+
 auth.register(opts).then(res => {
   var token = res.token;
   auth.permissions(token).then(console.log).catch(console.log);

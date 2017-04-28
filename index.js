@@ -4,7 +4,7 @@ var iam = require('open-iam');
 var async = require('async');
 var uuid = require('uuid');
 var auth = function(config) {
-  this.token = new Token(config.secret)
+  this.token = new Token(config.secret);
   this.redis = new redis({
     url: config.url,
     prefix: config.prefix,
@@ -70,7 +70,7 @@ auth.prototype.check = function(tok) {
  * @param  {Object} opts object used to create token
  * @return {Promise} resolve({token:toekn,iam:iam}) or reject()
  */
-auth.prototype.register = function(opts) {
+auth.prototype.register = function(opts, expireTime) {
   return new Promise((resolve, reject) => {
     opts.payload.id = uuid.v1();
     opts.payload.create_time = +new Date();
@@ -84,7 +84,7 @@ auth.prototype.register = function(opts) {
       return reject({ err: 'IAM was not provided in payload' });
     }
     this.redis
-      .insert(Obj)
+      .insert(Obj, expireTime)
       .then(res => resolve({ token: returnToken, iam: returnIam }))
       .catch(e => reject({ err: 'failed to store the token' }));
   });
