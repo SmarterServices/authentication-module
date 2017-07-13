@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "jwt-simple": "^0.5.1",
-    "open-iam": "0.0.12",
+    "open-iam": "1.0.0",
     "redis": "^2.7.1",
     "uuid": "^3.0.1"
   }
