@@ -65,17 +65,16 @@ redisWrapper.prototype.insert = function(Obj, expireTime) {
         return reject(err);
       }
       //set expire time in redis
-      if (expireTime && expireTime !== false) {
+      if(expireTime === 0) {
+        return resolve({worked:true})
+      } else if(expireTime) {
         this.client.expire(key, expireTime, (e, r) => {
           return e ? reject(e) : resolve(r);
-        });
-      } else if (this.expire) {
-        console.log(this.expire);
+        });      
+      } else {
         this.client.expire(key, this.expire, (e, r) => {
           return e ? reject(e) : resolve(r);
         });
-      } else {
-        return resolve({ worked: true });
       }
     });
   });
