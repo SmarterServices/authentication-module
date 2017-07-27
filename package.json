@@ -1,6 +1,6 @@
 {
   "name": "auth-module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "redis auth in module form",
   "main": "index.js",
   "scripts": {

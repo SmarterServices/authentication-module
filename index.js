@@ -12,6 +12,19 @@ var auth = function(config) {
   });
 };
 /**
+ * Returns the ttl for an existing token
+ * @param  {String} tok users token
+ * @return {Promise} resolve or reject
+ */
+auth.prototype.ttl = function(tok) {
+  return new Promise((resolve,reject) => {
+    this.redis
+        .ttl(tok)
+        .then(res => resolve({ttl:res}))
+        .catch(e => {reject({err:'Error getting time to live for token'})})
+  })
+}
+/**
  * logout this function will log a user out, ie delete their token
  * @param  {String} tok users token
  * @return {Promise} resolve or reject

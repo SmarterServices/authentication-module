@@ -5,6 +5,20 @@ var redisWrapper = function(config) {
   this.expire = config.expire;
 };
 /**
+   * returns the ttl for an existing token
+   * @param  {string} token The full token for the users session
+   * @return new Promise() 
+   */
+redisWrapper.prototype.ttl = function(token) {
+  console.log('happened')
+  var key = `${this.prefix}.${token.split('.')[token.split('.').length - 1]}`;
+  return new Promise((resolve,reject) => {
+    this.client.ttl(key,(err,res) => {
+      return err ? reject('could not get ttl for token') : resolve(res);
+    })
+  })
+}
+/**
 	 * remove This function is used to remove a key value store of a token in redis essencially ending a users session
 	 * @param  {string} token The full token for the users session
 	 * @return new Promise() 

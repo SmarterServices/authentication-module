@@ -1,9 +1,9 @@
 var Auth = require('./index');
 var auth = new Auth({
-  url: '',
-  expire: 3600,
-  prefix: '',
-  secret: ''
+  "url": "",
+  "expire": 3600,
+  "prefix": "",
+  "secret": ""
 });
 
 var opts = {
@@ -23,6 +23,14 @@ var opts = {
     ]
   }
 };
+var newTestToken = null
+auth.register(opts)
+  .then(res => {
+      newTestToken = res.token;
+      return auth.ttl(res.token)
+  })
+  .then(console.log)
+setTimeout(() => {auth.logout(newTestToken).then(console.log).catch(console.log)},3000)  
 setTimeout(
   () => {
     auth.register(opts, 5).then(res => {
