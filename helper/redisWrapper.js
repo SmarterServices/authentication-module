@@ -10,7 +10,6 @@ var redisWrapper = function(config) {
    * @return new Promise() 
    */
 redisWrapper.prototype.ttl = function(token) {
-  console.log('happened')
   var key = `${this.prefix}.${token.split('.')[token.split('.').length - 1]}`;
   return new Promise((resolve,reject) => {
     this.client.ttl(key,(err,res) => {
