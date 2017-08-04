@@ -48,13 +48,23 @@ redisWrapper.prototype.findOne = function(token) {
 	 * @param  {string} token The full token for the users session
 	 * @return new Promise() 
 	 */
-redisWrapper.prototype.update = function(token) {
+redisWrapper.prototype.update = function(token,expireTime) {
   //key is the very last part of token after last '.'
   var key = `${this.prefix}.${token.split('.')[token.split('.').length - 1]}`;
   return new Promise((resolve, reject) => {
-    this.client.expire(key, this.expire, (err, res) => {
-      return err || res === 0 ? reject('token does not exist') : resolve(res);
-    });
+    if(expireTime === 0) {
+        this.client.get(key, (err, res) => {
+          return err ? reject(err) : resolve(JSON.parse(res));
+        });
+      } else if(expireTime) {
+        this.client.expire(key, expireTime, (e, r) => {
+          return e || r === 0 ? reject('token does not exist') : resolve(r);
+        });      
+      } else {
+        this.client.expire(key, this.expire, (e, r) => {
+          return e || r === 0 ? reject('token does not exist') : resolve(r);
+        });
+      }
   });
 }, /**
 	 * insert This function is used to create a new session and get a new token for a user

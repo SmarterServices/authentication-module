@@ -41,6 +41,7 @@ auth.prototype.logout = function(tok) {
   });
 };
 /**
+.then(console.log)
  * permissions will return the iam doc for a token
  * @param  {String} tok users token
  * @return {Promise} resolve or reject
@@ -66,8 +67,14 @@ auth.prototype.permissions = function(tok) {
  */
 auth.prototype.check = function(tok) {
   return new Promise((resolve, reject) => {
+    let expire = null;
+    try {
+      expire = this.token.decode(tok).timeout;
+    } catch(e) {
+      
+    }
     this.redis
-      .update(tok)
+      .update(tok,expire)
       .then(res => {
         if (!res) {
           return reject('Token validation fail');
@@ -86,6 +93,11 @@ auth.prototype.check = function(tok) {
 auth.prototype.register = function(opts, expireTime) {
   return new Promise((resolve, reject) => {
     opts.payload.id = uuid.v1();
+
+    if(expireTime !== null) {
+      opts.payload.timeout = expireTime
+    }
+
     opts.payload.create_time = +new Date();
     var returnToken = this.token.encode(opts.payload);
     var Obj = { token: returnToken, createAt: new Date() };
