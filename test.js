@@ -1,35 +1,35 @@
 var Auth = require('./index');
 var auth = new Auth({
-    "url": "",
+    "url": "redis://x:SRBNGBBIMYWMIIZP@portal.authentication.smarterservices-llc.composedb.com:15753",
     "expire": 3600,
-    "prefix": "",
-    "secret": ""
+    "prefix": "production",
+    "secret": "Sc4$JG=vzb9W&Bg3"
 });
 
 var opts = {
-  payload: { thisopts: 'thisdoiwefwe', secondone: 'soihfwoeifhw2' },
-  iam: {
-    Statement: [
-      {
-        Effect: 'Allow',
-        Action: [ 'Read' ],
-        Resource: [ 'ssrn:ss:iam::100:assessmentgroup/*/customquestions' ]
-      },
-      {
-        Effect: 'Allow',
-        Action: [ 'Update', 'Delete', 'Create' ],
-        Resource: 'ssrn:ss:iam::100:assessmentgroup/1/customquestions'
-      }
-    ]
-  }
+"payload":{},
+"iam":{
+ "Statement": [
+            {
+                 "Effect": "Allow",
+                 "Action": "sp:*",
+                 "Resource": [
+                     "ssrn:ss:sp:::*",
+                     "ssrn:ss:sp::global:*"
+                 ]
+             }
+          ]
+}
 };
-var newTestToken = null
-// auth.register(opts,10000)
+// auth.register(opts,0)
 //   .then(res => {
 //     console.log('==============')
 //     console.log(res.token)
 //   // auth.permissions(res.token).then(console.log).catch(console.log);
 // })
+auth.check('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjA4MWRlMjUwLTc5NDUtMTFlNy1iMWJmLTE3NGY3MzhmNGRlMSIsInRpbWVvdXQiOjAsImNyZWF0ZV90aW1lIjoxNTAxODcyMzA1Mzk3fQ.UNaZHd7J01DzbnRmLUOOEL_ezw5LfDeVVmRuR5NwTso')
+.then(res => console.dir(res,{depth:10}))
+.catch(console.log)
 // auth.register(opts,0)
 //   .then(res => {
 //     console.log('==============')
@@ -42,7 +42,7 @@ var newTestToken = null
 //     console.log(res.token)
 //   // auth.permissions(res.token).then(console.log).catch(console.log);
 // })
-auth.check('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0aGlzb3B0cyI6InRoaXNkb2l3ZWZ3ZSIsInNlY29uZG9uZSI6InNvaWhmd29laWZodzIiLCJpZCI6IjlmMDVjZjIwLTc5MWQtMTFlNy04ZWUwLTMxODMwZDRjMjZkYyIsInRpbWVvdXQiOjEwMCwiY3JlYXRlX3RpbWUiOjE1MDE4NTUzNzg3MDd9.WSonppICTGJWTr4B5GDNuAYYbv_aeSwaf63NUhFQ6Z4').then(console.log).catch(console.log)
+// auth.ttl('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYzOGE1MDIwLTc5MjEtMTFlNy1iY2JkLWQ3MjIyOTI3NTA0MSIsImNyZWF0ZV90aW1lIjoxNTAxODU2OTk2ODk4fQ.yJh-sG0XOL6eCKhkm1ZvYo9294ZAd6Yibl3JVq8ER0Y').then(console.log).catch(console.log)
 // auth.register(opts)
 //   .then(res => {
 //     setTimeout(() => {

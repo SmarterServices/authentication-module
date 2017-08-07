@@ -1,4 +1,3 @@
-'use strict';
 var Token = require('./helper/token');
 var redis = require('./helper/redisWrapper');
 var iam = require('open-iam');
@@ -68,7 +67,7 @@ auth.prototype.permissions = function(tok) {
  */
 auth.prototype.check = function(tok) {
   return new Promise((resolve, reject) => {
-    let expire = null;
+    var expire = null;
     try {
       expire = this.token.decode(tok).timeout;
     } catch(e) {
