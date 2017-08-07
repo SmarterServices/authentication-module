@@ -1,9 +1,9 @@
 var Auth = require('./index');
 var auth = new Auth({
-    "url": "redis://x:SRBNGBBIMYWMIIZP@portal.authentication.smarterservices-llc.composedb.com:15753",
+    "url": "",
     "expire": 3600,
-    "prefix": "production",
-    "secret": "Sc4$JG=vzb9W&Bg3"
+    "prefix": "",
+    "secret": ""
 });
 
 var opts = {
