@@ -1,3 +1,4 @@
+'use strict';
 var Token = require('./helper/token');
 var redis = require('./helper/redisWrapper');
 var iam = require('open-iam');
