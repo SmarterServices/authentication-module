@@ -1,4 +1,3 @@
-'use strict';
 var redis = require('redis');
 var redisWrapper = function(config) {
   this.client = redis.createClient(config.url);
