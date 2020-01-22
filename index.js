@@ -71,7 +71,7 @@ auth.prototype.check = function(tok) {
     try {
       expire = this.token.decode(tok).timeout;
     } catch(e) {
-      
+
     }
     this.redis
       .update(tok,expire)
@@ -108,6 +108,11 @@ auth.prototype.register = function(opts, expireTime) {
     } else {
       return reject({ err: 'IAM was not provided in payload' });
     }
+
+    if(opts.signonData) {
+      Obj.signonData = opts.signonData;
+    }
+
     this.redis
       .insert(Obj, expireTime)
       .then(res => resolve({ token: returnToken, iam: returnIam }))
