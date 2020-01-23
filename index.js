@@ -119,4 +119,26 @@ auth.prototype.register = function(opts, expireTime) {
       .catch(e => reject({ err: 'failed to store the token' }));
   });
 };
+
+/**
+ * signonData will return the signonData for given token
+ * @param  {String} token users token
+ * @return {Promise} resolve with signonData
+ */
+auth.prototype.signonData = function(token) {
+  return new Promise((resolve, reject) => {
+    this.redis
+      .findOne(token)
+      .then(res => {
+        if (!res) {
+          return reject({ err: 'No data for that token' });
+        } else if (!res.signonData) {
+          return reject({ err: 'No signon data for that token' });          
+        }
+
+        return resolve({ signonData: res.signonData });
+      })      
+      .catch(e => reject({ err: 'Error retrieving signonData for a token' }));
+  });
+};
 module.exports = auth;
